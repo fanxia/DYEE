@@ -33,8 +33,12 @@ void EventTree::Loop()
 
    Long64_t nentries = fChain->GetEntriesFast();
 
-   TH1F *hist=new TH1F("h1","pfMET",200,0,100);
-   TH1F *hists=new TH1F("h2","pfMET",200,0,100);
+   TCanvas *c=new TCanvas();
+   c->Divide(2,2);
+   TH1F *hist=new TH1F("h","pfMET",200,0,100);
+   TH1F *hist0=new TH1F("h0","pfMET",200,0,100);
+   TH1F *hist1=new TH1F("h1","pfMET",200,0,100);
+   TH1F *hist2=new TH1F("h2","pfMET",200,0,100);
 
 
    Long64_t nbytes = 0, nb = 0;
@@ -45,9 +49,21 @@ void EventTree::Loop()
       // if (Cut(ientry) < 0) continue;
 
       hist->Fill(pfMET);
-      if(nEle==2){hists->Fill(pfMET);}
+      if(nEle==0){hist0->Fill(pfMET);}
+      if(nEle==1){hist1->Fill(pfMET);}
+      if(nEle==2){hist2->Fill(pfMET);}
    }
 
+   c->cd(1);
    hist->Draw();
-   hists->Draw("Same");
+   c->cd(2);
+    hist->Draw();
+hist0->Draw("Same");
+ c->cd(3);
+    hist->Draw();
+hist1->Draw("Same");
+ c->cd(4);
+    hist->Draw();
+hist2->Draw("Same");
+
 }
