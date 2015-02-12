@@ -36,9 +36,9 @@ void EventTree::Loop()
    TCanvas *c=new TCanvas();
    c->Divide(2,2);
    TH1F *hist=new TH1F("h","pfMET",200,0,100);
-   TH1F *hist0=new TH1F("h0","pfMET",200,0,100);
-   TH1F *hist1=new TH1F("h1","pfMET",200,0,100);
-   TH1F *hist2=new TH1F("h2","pfMET",200,0,100);
+   TH1F *hist0=new TH1F("h0","pfMET nEle=0",200,0,100);
+   TH1F *hist1=new TH1F("h1","pfMET nEle=1",200,0,100);
+   TH1F *hist2=new TH1F("h2","pfMET nEle=2",200,0,100);
 
 
    Long64_t nbytes = 0, nb = 0;
@@ -54,16 +54,19 @@ void EventTree::Loop()
       if(nEle==2){hist2->Fill(pfMET);}
    }
 
-   c->cd(1);
-   hist->Draw();
+   c->cd(1)->SetTitle("pad1");
+   hist->Draw("elp");
+   hist->Fit("gaus");
    c->cd(2);
-    hist->Draw();
-hist0->Draw("Same");
+   //hist->Draw();
+    hist0->SetFillColor(2);
+    hist0->SetTitle("pfMET;nEle0");
+hist0->Draw();
  c->cd(3);
-    hist->Draw();
-hist1->Draw("Same");
+ //hist->Draw();
+hist1->Draw();
  c->cd(4);
-    hist->Draw();
-hist2->Draw("Same");
+ //hist->Draw();
+hist2->Draw();
 
 }

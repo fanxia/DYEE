@@ -425,11 +425,11 @@ EventTree::EventTree(TTree *tree) : fChain(0)
 // if parameter tree is not specified (or zero), connect the file
 // used to generate this class and read the Tree.
    if (tree == 0) {
-      TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("/eos/uscms/store/user/areinsvo/DYToEE_M-50_Tune4C_13TeV-pythia8/Phys14_ggNtuples_DYToEE/150126_213933/0000/ggtree_mc_90.root");
+      TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("/eos/uscms/store/user/areinsvo/DYToEE_M-50_Tune4C_13TeV-pythia8/Phys14_ggNtuples_DYToEE/150126_213933/0000/ggtree_mc_100.root");
       if (!f || !f->IsOpen()) {
-         f = new TFile("/eos/uscms/store/user/areinsvo/DYToEE_M-50_Tune4C_13TeV-pythia8/Phys14_ggNtuples_DYToEE/150126_213933/0000/ggtree_mc_90.root");
+         f = new TFile("/eos/uscms/store/user/areinsvo/DYToEE_M-50_Tune4C_13TeV-pythia8/Phys14_ggNtuples_DYToEE/150126_213933/0000/ggtree_mc_100.root");
       }
-      TDirectory * dir = (TDirectory*)f->Get("/eos/uscms/store/user/areinsvo/DYToEE_M-50_Tune4C_13TeV-pythia8/Phys14_ggNtuples_DYToEE/150126_213933/0000/ggtree_mc_90.root:/ggNtuplizer");
+      TDirectory * dir = (TDirectory*)f->Get("/eos/uscms/store/user/areinsvo/DYToEE_M-50_Tune4C_13TeV-pythia8/Phys14_ggNtuples_DYToEE/150126_213933/0000/ggtree_mc_100.root:/ggNtuplizer");
       dir->GetObject("EventTree",tree);
 
    }

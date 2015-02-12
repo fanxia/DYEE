@@ -32,7 +32,7 @@ void EventTree::Loop()
    if (fChain == 0) return;
 
    Long64_t nentries = fChain->GetEntriesFast();
-
+   printf("nentries=%lld\n",nentries);
    TCanvas *c=new TCanvas();
    c->Divide(2,2);
    TH1F *hist=new TH1F("h","pfMET",200,0,100);
