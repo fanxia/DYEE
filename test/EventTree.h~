@@ -16,13 +16,15 @@
 #include <vector>
 #include <vector>
 #include <vector>
+using namespace std;
 
 // Fixed size dimensions of array or collections stored in the TTree if any.
 
 class EventTree {
 public :
-   TTree          *fChain;   //!pointer to the analyzed TTree or TChain
-   Int_t           fCurrent; //!current Tree number in a TChain
+  // TTree          *fChain;   //!pointer to the analyzed TTree or TChain
+  TChain   *fChain;
+Int_t           fCurrent; //!current Tree number in a TChain
 
    // Declaration of leaf types
    Int_t           run;
@@ -406,12 +408,14 @@ public :
    TBranch        *b_jetPartonID;   //!
    TBranch        *b_jetPFLooseId;   //!
 
-   EventTree(TTree *tree=0);
-   virtual ~EventTree();
+   //EventTree(TTree *tree=0);
+   TChain * chain;
+   EventTree(TChain * chain=0);
+virtual ~EventTree();
    virtual Int_t    Cut(Long64_t entry);
    virtual Int_t    GetEntry(Long64_t entry);
    virtual Long64_t LoadTree(Long64_t entry);
-   virtual void     Init(TTree *tree);
+   virtual void     Init(TChain *tree);
    virtual void     Loop();
    virtual Bool_t   Notify();
    virtual void     Show(Long64_t entry = -1);
@@ -420,21 +424,32 @@ public :
 #endif
 
 #ifdef EventTree_cxx
-EventTree::EventTree(TTree *tree) : fChain(0) 
+/*EventTree::EventTree(TTree *tree) : fChain(0) 
 {
 // if parameter tree is not specified (or zero), connect the file
 // used to generate this class and read the Tree.
    if (tree == 0) {
-      TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("/eos/uscms/store/user/areinsvo/DYToEE_M-50_Tune4C_13TeV-pythia8/Phys14_ggNtuples_DYToEE/150126_213933/0000/ggtree_mc_100.root");
+      TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("/eos/uscms/store/user/areinsvo/DYToEE_M-50_Tune4C_13TeV-pythia8/Phys14_ggNtuples_DYToEE/150126_213933/0000/ggtree_mc_90.root");
       if (!f || !f->IsOpen()) {
-         f = new TFile("/eos/uscms/store/user/areinsvo/DYToEE_M-50_Tune4C_13TeV-pythia8/Phys14_ggNtuples_DYToEE/150126_213933/0000/ggtree_mc_100.root");
+         f = new TFile("/eos/uscms/store/user/areinsvo/DYToEE_M-50_Tune4C_13TeV-pythia8/Phys14_ggNtuples_DYToEE/150126_213933/0000/ggtree_mc_90.root");
       }
-      TDirectory * dir = (TDirectory*)f->Get("/eos/uscms/store/user/areinsvo/DYToEE_M-50_Tune4C_13TeV-pythia8/Phys14_ggNtuples_DYToEE/150126_213933/0000/ggtree_mc_100.root:/ggNtuplizer");
+      TDirectory * dir = (TDirectory*)f->Get("/eos/uscms/store/user/areinsvo/DYToEE_M-50_Tune4C_13TeV-pythia8/Phys14_ggNtuples_DYToEE/150126_213933/0000/ggtree_mc_90.root:/ggNtuplizer");
       dir->GetObject("EventTree",tree);
 
    }
    Init(tree);
+   }  */
+
+EventTree::EventTree(TChain *chain)
+{
+  // ggNtuplizer->cd();
+  TChain *chain=new TChain("EventTree","");
+  //chain->Add("/eos/uscms/store/user/areinsvo/DYToEE_M-50_Tune4C_13TeV-pythia8/Phys14_ggNtuples_DYToEE/150126_213933/0000/ggtree_mc_90.root:/ggNtuplizer/EventTree");
+  std::cout<<"Total number of entries in chain"<<chain->GetEntries()<<std::endl;
+  Init(chain);
 }
+
+
 
 EventTree::~EventTree()
 {
@@ -461,7 +476,7 @@ Long64_t EventTree::LoadTree(Long64_t entry)
    return centry;
 }
 
-void EventTree::Init(TTree *tree)
+void EventTree::Init(TChain *tree)
 {
    // The Init() function is called when the selector needs to initialize
    // a new tree or chain. Typically here the branch addresses and branch
