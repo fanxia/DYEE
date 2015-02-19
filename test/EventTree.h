@@ -5,6 +5,11 @@
 // found on file: /eos/uscms/store/user/areinsvo/DYToEE_M-50_Tune4C_13TeV-pythia8/Phys14_ggNtuples_DYToEE/150126_213933/0000/ggtree_mc_100.root
 //////////////////////////////////////////////////////////
 
+
+//I modified the code to make it a Chain and go through all the files in DY to EE samples.
+
+
+
 #ifndef EventTree_h
 #define EventTree_h
 
